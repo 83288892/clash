@@ -1,4 +1,4 @@
-# 自制 简单Clash预处理配置文件
+#自用预处理
 parsers: # array
   - reg: ^.*$
   # 删除服务商提供的策略组和规则
@@ -15,11 +15,12 @@ parsers: # array
         - name: ✈️代理模式
           type: select
           proxies:
+            - DIRECT
+            - 🚀手动选择
             - ♻️自动选择
             - 🔀负载均衡[散列]
             - 🔁负载均衡[轮询]
-            - 🚀手动选择
-            - DIRECT
+            
 
         - name: 🚀手动选择
           type: select
@@ -30,7 +31,7 @@ parsers: # array
           interval: 60
           lazy: true
           tolerance: 100
-
+                   
         - name: 🔀负载均衡[散列]
           type: load-balance
           url: http://www.gstatic.com/generate_204
@@ -43,26 +44,38 @@ parsers: # array
           interval: 60
           strategy: round-robin
 
+        - name: 💻微软服务
+          type: select
+          proxies:
+            - DIRECT
+            - ✈️代理模式
+
+        - name: 🎮游戏平台
+          type: select
+          proxies:
+            - DIRECT
+            - ✈️代理模式
+
         - name: 🆎广告拦截
           type: select
           proxies:
-            - REJECT
             - DIRECT
             - ✈️代理模式
+            - REJECT
 
         - name: 🌏无序匹配
           type: select
           proxies:
-            - ✈️代理模式
             - DIRECT
+            - ✈️代理模式  
             
 
       commands:
         - dns.enhanced-mode=fake-ip      
         - proxy-groups.(♻️自动选择).proxies=[]proxyNames
+        - proxy-groups.(🚀手动选择).proxies=[]proxyNames
         - proxy-groups.(🔀负载均衡[散列]).proxies=[]proxyNames
         - proxy-groups.(🔁负载均衡[轮询]).proxies=[]proxyNames
-        - proxy-groups.(🚀手动选择).proxies=[]proxyNames
         - mixed-port=7890
         
         # 一些可能用到的正则式
@@ -73,8 +86,8 @@ parsers: # array
         # []proxyNames|^((?!b|c).)*a((?!b|c).)*$ # 包含a且不包含b或c
 
       prepend-rules:
-        - DOMAIN-KEYWORD,msn.com,✈️代理模式
-        - DOMAIN-KEYWORD,bing.com,✈️代理模式
+        - RULE-SET,microsoft,💻微软服务
+        - RULE-SET,game,🎮游戏平台
         - RULE-SET,applications,DIRECT
         - DOMAIN,clash.razord.top,DIRECT #域名匹配
         - DOMAIN-SUFFIX,ptwxz.com,✈️代理模式 #域名后缀匹配
@@ -206,3 +219,17 @@ parsers: # array
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/applications.txt"
           path: ./ruleset/applications.yaml
           interval: 86400
+
+        microsoft:  # 微软服务
+          type: http
+          behavior: domain
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml"
+          path: ./ruleset/microsoft.yaml
+          interval: 86400    
+
+        game:  # 游戏平台
+          type: http
+          behavior: domain
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game.yaml"
+          path: ./ruleset/microsoft.yaml
+          interval: 86400   
