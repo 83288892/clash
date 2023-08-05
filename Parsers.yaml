@@ -1,4 +1,4 @@
-# 自用
+#自用
 parsers: # array
   - reg: ^.*$
   # 删除服务商提供的策略组和规则
@@ -79,8 +79,7 @@ parsers: # array
           proxies:
             - 🆗直连模式
             - ✈️代理模式  
-      commands:
-        - mixed-port=7890
+      commands:        
         - dns.enable=true  # 设置为true以启用DNS功能
         - dns.ipv6=false   # 设置为true以启用IPV6 DNS解析
         - dns.listen=0.0.0.0:53   # 设置DNS监听地址和端口
@@ -92,7 +91,8 @@ parsers: # array
         - dns.fallback-filter.geoip=true   # 设置为true以启用geoip判断，如果域名解析出来的IP地址不属于中国，就使用fallback组进行解析
         - dns.fallback-filter.geoip-code=CN    # 设置geoip判断的国家代码，可以是ISO 3166-1 alpha-2或alpha-3格式
         - dns.fallback-filter.ipcidr=["240.0.0.0/4"]  # 设置一个IP地址段的数组，如果域名解析出来的IP地址属于这些地址段，就使用fallback组进行解析 表示240.0.0.0到255.255.255.255之间的所有IP地址
-        - dns.fallback-filter.domain=["+.google.com","+.facebook.com","+.youtube.com"] # 设置一个域名的数组，如果域名匹配这些域名，就使用fallback组进行解析 +号表示强制匹配  
+        - dns.fallback-filter.domain=["+.google.com","+.facebook.com","+.youtube.com"] # 设置一个域名的数组，如果域名匹配这些域名，就使用fallback组进行解析 +号表示强制匹配 
+        - mixed-port=7890 
         - proxy-groups.(♻️自动选择).proxies=[]proxyNames
         - proxy-groups.(🚀手动选择).proxies=[]proxyNames
         - proxy-groups.(🔀负载均衡[散列]).proxies=[]proxyNames
