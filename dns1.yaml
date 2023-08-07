@@ -8,17 +8,51 @@ parsers: # array
         const rules = []
         return yaml.stringify({ ...rawObj, 'proxy-groups': groups, rules })
       } 
- 
+
     yaml:
       mix-object:
         dns:
-          enable: true # 启用DNS
-          nameserver: # 设置nameserver
-            - 4.4.4.4
+          enable: true
+          ipv6: false
+          listen: 0.0.0.0:53
+          enhanced-mode: fake-ip
+          fake-ip-range: 198.18.0.1/16
+          fake-ip-filter:
+            - "*.lan"
+            - localhost.ptlogin2.qq.com
+            - +.srv.nintendo.net
+            - +.stun.playstation.net
+            - +.msftconnecttest.com
+            - +.msftncsi.com
+            - +.xboxlive.com
+            - msftconnecttest.com
+            - xbox.*.microsoft.com
+            - "*.battlenet.com.cn"
+            - "*.battlenet.com"
+            - "*.blzstatic.cn"
+            - "*.battle.net"
+            - "*.mcdn.bilivideo.cn"
+          nameserver:
+            - 4.2.2.1
             - 8.8.8.8
-          fallback: # 设置fallback
+            - https://1.1.1.1/dns-query
+            - dhcp://en0
+          fallback:
+            - tls://1.1.1.1:853
+            - tcp://1.1.1.1:53
+            - tcp://208.67.222.222:443
             - tls://dns.google
-            - https://cloudflare-dns.com/dns-query
+          fallback-filter:
+            geoip: true
+            geoip-code: CN
+            ipcidr:
+              - 240.0.0.0/4
+            domain:
+              - +.google.com
+              - +.facebook.com
+              - +.youtube.com
+       
+          
       prepend-proxy-groups:
         - name: ✈️代理模式
           type: select
