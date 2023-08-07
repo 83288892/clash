@@ -79,14 +79,14 @@ parsers: # array
             - 🆗直连模式
             - ✈️代理模式  
       commands:        
-        - dns.enable=true  # 设置为true以启用DNS功能
-        - dns.ipv6=false   # 设置为true以启用IPV6 DNS解析
+        - dns.enable=true  # 设置为true以启用DNS功能 false关闭
+        - dns.ipv6=true   # 设置为true以启用IPV6 DNS解析
         - dns.listen=0.0.0.0:53   # 设置DNS监听地址和端口
         - dns.enhanced-mode=fake-ip   # 设置DNS模式，可以是redir-host或fake-ip  
         - dns.fake-ip-range=198.18.0.1/16    # 设置fake-ip的IP段
         - dns.fake-ip-filter=["*.lan","localhost.ptlogin2.qq.com","+.srv.nintendo.net","+.stun.playstation.net","+.msftconnecttest.com","+.msftncsi.com","+.xboxlive.com","msftconnecttest.com","xbox.*.microsoft.com","*.battlenet.com.cn","*.battlenet.com","*.blzstatic.cn","*.battle.net","*.mcdn.bilivideo.cn"] # 设置fake-ip黑名单，这些域名将返回真实IP
-        - dns.nameserver=["4.2.2.1","8.8.8.8","https://1.1.1.1/dns-query","dhcp://en0"] # 设置上游DNS服务器，可以使用ipv4或ipv6地址，或者带有协议的地址
-        - dns.fallback=["tls://1.1.1.1:853","tcp://1.1.1.1:53","tcp://208.67.222.222:443","tls://dns.google"] # 设置备用DNS服务器，当nameserver无法解析时使用，建议使用支持DNSSEC的服务器
+        - dns.nameserver=["https://dns.alidns.com/dns-query","tls://dns.alidns.com","https://doh.pub/dns-query","tls://dot.pub","dhcp://en0"] # 设置上游DNS服务器，可以使用ipv4或ipv6地址，或者带有协议的地址
+        - dns.fallback=["https://dns.google/dns-query","tls://dns.google:853","https://1.1.1.1/dns-query","tls://1.1.1.1:853"] # 设置备用DNS服务器，当nameserver无法解析时使用，建议使用支持DNSSEC的服务器
         - dns.fallback-filter.geoip=true   # 设置为true以启用geoip判断，如果域名解析出来的IP地址不属于中国，就使用fallback组进行解析
         - dns.fallback-filter.geoip-code=CN    # 设置geoip判断的国家代码，可以是ISO 3166-1 alpha-2或alpha-3格式
         - dns.fallback-filter.ipcidr=["240.0.0.0/4"]  # 设置一个IP地址段的数组，如果域名解析出来的IP地址属于这些地址段，就使用fallback组进行解析 表示240.0.0.0到255.255.255.255之间的所有IP地址
@@ -105,21 +105,22 @@ parsers: # array
         # []proxyNames|^((?!b).)*a((?!b).)*$     # 包含a且不包含b
         # []proxyNames|^((?!b|c).)*a((?!b|c).)*$ # 包含a且不包含b或c    
 
-      prepend-rules:
-        - RULE-SET,microsoft,💻微软服务
-        - RULE-SET,game,🎮游戏平台
-        - RULE-SET,applications,🆗直连模式
+      prepend-rules:  
         - DOMAIN,clash.razord.top,🆗直连模式 #域名匹配
-        - DOMAIN-KEYWORD,kuaikan,🆗直连模式
+        - DOMAIN,yacd.haishan.me,🆗直连模式        
+        - DOMAIN-KEYWORD,kuaikan,🆗直连模式  #域名关键字
         - DOMAIN-KEYWORD,kkzyplayer,🆗直连模式
-        - DOMAIN-SUFFIX,kuaikan-cdn1.com,🆗直连模式
+        - DOMAIN-SUFFIX,kuaikan-cdn1.com,🆗直连模式 #域名后缀匹配
         - DOMAIN-SUFFIX,bfzyplayer.com,🆗直连模式
         - DOMAIN-SUFFIX,bfzycdn.com,🆗直连模式
-        - DOMAIN-SUFFIX,ptwxz.com,✈️代理模式 #域名后缀匹配
+        - DOMAIN-SUFFIX,ptwxz.com,✈️代理模式 
         - DOMAIN-SUFFIX,fast.com,✈️代理模式
         - DOMAIN-SUFFIX,speedtest.net,✈️代理模式
-        - DOMAIN,yacd.haishan.me,🆗直连模式
-        - RULE-SET,private,🆗直连模式 # Rule规则匹配
+        - DOMAIN-SUFFIX,bing.com,✈️代理模式
+        - RULE-SET,applications,🆗直连模式 # Rule规则匹配
+        - RULE-SET,microsoft,💻微软服务
+        - RULE-SET,game,🎮游戏平台        
+        - RULE-SET,private,🆗直连模式 
         - RULE-SET,reject,🆎广告拦截
         - RULE-SET,icloud,🆗直连模式 #
         - RULE-SET,apple,🆗直连模式 # 这三个为国内可直连地址，如果希望走代理改为PROXY
@@ -132,7 +133,7 @@ parsers: # array
         - RULE-SET,cncidr,🆗直连模式
         - GEOIP,CN,🆗直连模式
         - RULE-SET,direct,🆗直连模式
-        - RULE-SET,proxy,🌏无序匹配
+        - RULE-SET,proxy,✈️代理模式
         - MATCH,🌏无序匹配 # 规则之外的
         #DOMAIN-SUFFIX：域名后缀匹配
         #DOMAIN：域名匹配
