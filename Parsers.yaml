@@ -24,13 +24,15 @@ parsers: # array
 
         - name: 🚀手动选择
           type: select
+          url: http://www.gstatic.com/generate_204
+          interval: 600
 
         - name: ♻️自动选择
           type: url-test
           url: http://www.gstatic.com/generate_204
-          interval: 60
+          interval: 300
           lazy: true
-          tolerance: 100
+          tolerance: 200
 
         - name: 🆗直连模式
           type: select
@@ -45,13 +47,13 @@ parsers: # array
         - name: 🔀负载均衡[散列]
           type: load-balance
           url: http://www.gstatic.com/generate_204
-          interval: 60
+          interval: 600
           strategy: consistent-hashing
 
         - name: 🔁负载均衡[轮询]
           type: load-balance
           url: http://www.gstatic.com/generate_204
-          interval: 60
+          interval: 600
           strategy: round-robin
 
         - name: 💻微软服务
@@ -85,8 +87,8 @@ parsers: # array
         - dns.enhanced-mode=fake-ip   # 设置DNS模式，可以是redir-host或fake-ip  
         - dns.fake-ip-range=198.18.0.1/16    # 设置fake-ip的IP段
         - dns.fake-ip-filter=["*.lan","localhost.ptlogin2.qq.com","+.srv.nintendo.net","+.stun.playstation.net","+.msftconnecttest.com","+.msftncsi.com","+.xboxlive.com","msftconnecttest.com","xbox.*.microsoft.com","*.battlenet.com.cn","*.battlenet.com","*.blzstatic.cn","*.battle.net","*.mcdn.bilivideo.cn"] # 设置fake-ip黑名单，这些域名将返回真实IP
-        - dns.nameserver=["https://dns.alidns.com/dns-query","tls://dns.alidns.com","https://doh.pub/dns-query","tls://dot.pub","dhcp://en0"] # 设置上游DNS服务器，可以使用ipv4或ipv6地址，或者带有协议的地址
-        - dns.fallback=["https://dns.google/dns-query","tls://dns.google:853","https://1.1.1.1/dns-query","tls://1.1.1.1:853"] # 设置备用DNS服务器，当nameserver无法解析时使用，建议使用支持DNSSEC的服务器
+        - dns.nameserver=["https://dns.google/dns-query","https://1.1.1.1/dns-query","https://doh.opendns.com/dns-query","dhcp://en0"] # 设置上游DNS服务器，可以使用ipv4或ipv6地址，或者带有协议的地址
+        - dns.fallback=["tls://dns.google","tls://1.1.1.1"] # 设置备用DNS服务器，当nameserver无法解析时使用，建议使用支持DNSSEC的服务器
         - dns.fallback-filter.geoip=true   # 设置为true以启用geoip判断，如果域名解析出来的IP地址不属于中国，就使用fallback组进行解析
         - dns.fallback-filter.geoip-code=CN    # 设置geoip判断的国家代码，可以是ISO 3166-1 alpha-2或alpha-3格式
         - dns.fallback-filter.ipcidr=["240.0.0.0/4"]  # 设置一个IP地址段的数组，如果域名解析出来的IP地址属于这些地址段，就使用fallback组进行解析 表示240.0.0.0到255.255.255.255之间的所有IP地址
@@ -96,7 +98,6 @@ parsers: # array
         - proxy-groups.(🚀手动选择).proxies=[]proxyNames
         - proxy-groups.(🔀负载均衡[散列]).proxies=[]proxyNames
         - proxy-groups.(🔁负载均衡[轮询]).proxies=[]proxyNames
-        
            
         # 一些可能用到的正则式
         # []proxyNames|a                         # 包含a
@@ -153,109 +154,109 @@ parsers: # array
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
           path: ./ruleset/reject.yaml
-          interval: 86400
+          interval: 1800
           
         icloud: # iCloud 域名列表
           type: http
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/icloud.txt"
           path: ./ruleset/icloud.yaml
-          interval: 86400
+          interval: 1800
           
         apple: # Apple 在中国大陆可直连的域名列表
           type: http
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/apple.txt"
           path: ./ruleset/apple.yaml
-          interval: 86400
+          interval: 1800
           
         google: # Google 在中国大陆可直连的域名列表
           type: http
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/google.txt"
           path: ./ruleset/google.yaml
-          interval: 86400
+          interval: 1800
           
         proxy: # 代理域名列表
           type: http
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt"
           path: ./ruleset/proxy.yaml
-          interval: 86400
+          interval: 1800
           
         direct: # 直连域名列表
           type: http
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt"
           path: ./ruleset/direct.yaml
-          interval: 86400
+          interval: 1800
           
         private: # 私有网络专用域名列表
           type: http
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt"
           path: ./ruleset/private.yaml
-          interval: 86400
+          interval: 1800
           
         gfw: # GFWList 域名列表
           type: http
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt"
           path: ./ruleset/gfw.yaml
-          interval: 86400
+          interval: 1800
           
         greatfire: # GreatFire 域名列表
           type: http
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/greatfire.txt"
           path: ./ruleset/greatfire.yaml
-          interval: 86400
+          interval: 1800
           
         tld-not-cn: # 非中国大陆使用的顶级域名列表
           type: http
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt"
           path: ./ruleset/tld-not-cn.yaml
-          interval: 86400
+          interval: 1800
           
         telegramcidr: # Telegram 使用的 IP 地址列表
           type: http
           behavior: ipcidr
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/telegramcidr.txt"
           path: ./ruleset/telegramcidr.yaml
-          interval: 86400
+          interval: 1800
           
         cncidr: # 中国大陆 IP 地址列表
           type: http
           behavior: ipcidr
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt"
           path: ./ruleset/cncidr.yaml
-          interval: 86400
+          interval: 1800
           
         lancidr: # 局域网 IP 及保留 IP 地址列表
           type: http
           behavior: ipcidr
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt"
           path: ./ruleset/lancidr.yaml
-          interval: 86400
+          interval: 1800
           
         applications: # 需要直连的常见软件列表
           type: http
           behavior: classical
           url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/applications.txt"
           path: ./ruleset/applications.yaml
-          interval: 86400
+          interval: 1800
 
         microsoft:  # 微软服务
           type: http
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml"
           path: ./ruleset/microsoft.yaml
-          interval: 86400    
+          interval: 1800    
 
         game:  # 游戏平台
           type: http
           behavior: domain
           url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game.yaml"
           path: ./ruleset/game.yaml
-          interval: 86400   
+          interval: 1800   
