@@ -87,8 +87,8 @@ parsers: # array
         - dns.enhanced-mode=fake-ip   # 设置DNS模式，可以是redir-host或fake-ip  
         - dns.fake-ip-range=198.18.0.1/16    # 设置fake-ip的IP段
         - dns.fake-ip-filter=["*.lan","localhost.ptlogin2.qq.com","+.srv.nintendo.net","+.stun.playstation.net","+.msftconnecttest.com","+.msftncsi.com","+.xboxlive.com","msftconnecttest.com","xbox.*.microsoft.com","*.battlenet.com.cn","*.battlenet.com","*.blzstatic.cn","*.battle.net","*.mcdn.bilivideo.cn"] # 设置fake-ip黑名单，这些域名将返回真实IP
-        - dns.nameserver=["https://dns.google/dns-query","https://1.1.1.1/dns-query","https://dns.alidns.com/dns-query","https://doh.pub/dns-query","https://doh.opendns.com/dns-query","dhcp://en0"] # 设置上游DNS服务器，可以使用ipv4或ipv6地址，或者带有协议的地址
-        - dns.fallback=["tls://dns.google","tls://1.1.1.1"] # 设置备用DNS服务器，当nameserver无法解析时使用，建议使用支持DNSSEC的服务器
+        - dns.nameserver=["https://dns.google/dns-query","https://1.1.1.1/dns-query","4.2.2.1","4.2.2.2","https://dns.alidns.com/dns-query","https://doh.pub/dns-query","https://doh.opendns.com/dns-query","dhcp://en0"] # 设置上游DNS服务器，可以使用ipv4或ipv6地址，或者带有协议的地址
+        - dns.fallback=["tls://dns.google","tls://1.1.1.1","tcp://1.1.1.1:53","tcp://208.67.222.222:443"] # 设置备用DNS服务器，当nameserver无法解析时使用，建议使用支持DNSSEC的服务器
         - dns.fallback-filter.geoip=true   # 设置为true以启用geoip判断，如果域名解析出来的IP地址不属于中国，就使用fallback组进行解析
         - dns.fallback-filter.geoip-code=CN    # 设置geoip判断的国家代码，可以是ISO 3166-1 alpha-2或alpha-3格式
         - dns.fallback-filter.ipcidr=["240.0.0.0/4"]  # 设置一个IP地址段的数组，如果域名解析出来的IP地址属于这些地址段，就使用fallback组进行解析 表示240.0.0.0到255.255.255.255之间的所有IP地址
@@ -123,6 +123,7 @@ parsers: # array
         - RULE-SET,game,🎮游戏平台        
         - RULE-SET,private,🆗直连模式 
         - RULE-SET,reject,🆎广告拦截
+        - RULE-SET,ad,🆎广告拦截
         - RULE-SET,icloud,🆗直连模式 #
         - RULE-SET,apple,🆗直连模式 # 这三个为国内可直连地址，如果希望走代理改为PROXY
         - RULE-SET,google,🆗直连模式 # 
@@ -260,3 +261,10 @@ parsers: # array
           url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game.yaml"
           path: ./ruleset/game.yaml
           interval: 1800   
+
+        ad:  # 广告拦截
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Advertising/Advertising_Classical.yaml"
+          path: ./ruleset/Advertising_Classical.yaml
+          interval: 1800            
