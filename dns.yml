@@ -125,7 +125,7 @@ parsers: # array
             - ✈️代理模式
             - 🚫阻止连接
 
-        - name: 🌏无序匹配
+        - name: 🌏例外规则
           type: select
           proxies:
             - 🆗直连模式
@@ -173,7 +173,7 @@ parsers: # array
         - GEOIP,CN,🆗直连模式
         - RULE-SET,direct,🆗直连模式
         - RULE-SET,proxy,✈️代理模式
-        - MATCH,🌏无序匹配 # 规则之外的
+        - MATCH,🌏例外规则 # 规则之外的
         #DOMAIN-SUFFIX：域名后缀匹配
         #DOMAIN：域名匹配
         #DOMAIN-KEYWORD：域名关键字匹配
@@ -299,7 +299,7 @@ parsers: # array
           path: ./ruleset/game.yaml
           interval: 1800   
 
-        ad:  # 广告拦截
+        Advertising_Classical:  # 广告拦截
           type: http
           behavior: classical
           url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Advertising/Advertising_Classical.yaml"
