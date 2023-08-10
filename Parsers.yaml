@@ -86,6 +86,7 @@ parsers: # array
         - dns.listen=0.0.0.0:53   # 设置DNS监听地址和端口
         - dns.enhanced-mode=fake-ip   # 设置DNS模式，可以是redir-host或fake-ip  
         - dns.fake-ip-range=198.18.0.1/16    # 设置fake-ip的IP段
+        - dns.use-hosts=true
         - dns.fake-ip-filter=["*.lan","localhost.ptlogin2.qq.com","+.srv.nintendo.net","+.stun.playstation.net","+.msftconnecttest.com","+.msftncsi.com","+.xboxlive.com","msftconnecttest.com","xbox.*.microsoft.com","*.battlenet.com.cn","*.battlenet.com","*.blzstatic.cn","*.battle.net","*.mcdn.bilivideo.cn"] # 设置fake-ip黑名单，这些域名将返回真实IP
         - dns.default-nameserver=["4.2.2.1","4.2.2.2","8.8.8.8","8.8.4.4"]
         - dns.nameserver=["https://dns.google/dns-query","https://1.1.1.1/dns-query","4.2.2.1","4.2.2.2","https://dns.alidns.com/dns-query","https://doh.pub/dns-query","https://doh.opendns.com/dns-query","dhcp://en0"] # 设置上游DNS服务器，可以使用ipv4或ipv6地址，或者带有协议的地址
