@@ -160,7 +160,7 @@ parsers: # array
         - RULE-SET,game,🎮游戏平台        
         - RULE-SET,private,🆗直连模式 
         - RULE-SET,reject,🆎广告拦截
-        - RULE-SET,ad,🆎广告拦截
+        - RULE-SET,Advertising_Classical,🆎广告拦截
         - RULE-SET,icloud,🆗直连模式 #
         - RULE-SET,apple,🆗直连模式 # 这三个为国内可直连地址，如果希望走代理改为PROXY
         - RULE-SET,google,🆗直连模式 # 
