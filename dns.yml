@@ -148,6 +148,7 @@ parsers: # array
         - DOMAIN,yacd.haishan.me,🆗直连模式        
         - DOMAIN-KEYWORD,kuaikan,🆗直连模式  #域名关键字
         - DOMAIN-KEYWORD,kkzyplayer,🆗直连模式
+        - DOMAIN-KEYWORD,bing,✈️代理模式
         - DOMAIN-SUFFIX,kuaikan-cdn1.com,🆗直连模式 #域名后缀匹配
         - DOMAIN-SUFFIX,bfzyplayer.com,🆗直连模式
         - DOMAIN-SUFFIX,bfzycdn.com,🆗直连模式
