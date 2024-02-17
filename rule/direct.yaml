@@ -1,6 +1,6 @@
 # NAME: Direct
 payload:
-  - DOMAIN-SUFFIX,servarica.com
-  - DOMAIN-SUFFIX,servarica.net  
-  - DOMAIN-SUFFIX,spaceship.com
-  - DOMAIN-SUFFIX,83288892.xyz
+- "+.servarica.com"
+- "+.servarica.net"
+- "+.spaceship.com"
+- "+.83288892.xyz"
