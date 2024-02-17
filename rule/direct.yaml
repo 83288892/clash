@@ -1,3 +1,5 @@
 # NAME: Direct
 payload:
-  - DOMAIN-SUFFIX,baidu.com
+  - DOMAIN-SUFFIX,servarica.com
+  - DOMAIN-SUFFIX,servarica.net  
+  - DOMAIN-SUFFIX,spaceship.com
