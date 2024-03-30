@@ -165,6 +165,7 @@ rules:
 #  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),🆎 广告拦截 # quic
 #  - AND,((RULE-SET,anti-AD),(NOT,((RULE-SET,anti-AD-white)))),🆎 广告拦截
 #  - RULE-SET,Advertising_Classical,🆎 广告拦截
+#  - DOMAIN,alidocs.dingtalk.com,♻️ 代理模式 #叮叮免流
 
   - GEOIP,lan,➡️ 直连模式,no-resolve
   - RULE-SET,CustomProxy_domain,♻️ 代理模式
