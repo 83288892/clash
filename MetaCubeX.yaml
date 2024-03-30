@@ -122,7 +122,7 @@ proxy-groups:
   
 #分流策略
 
-  - {name: dns, type: select, proxies: [♻️ 代理模式]}
+  - {name: dns, type: select, proxies: [♻️ 代理模式, 🚀 手动选择]}
 #  - {name: 🆎 广告拦截, type: select, proxies: [❌ 断开连接, ♻️ 代理模式,  ➡️ 直连模式]}
   - {name: 🟥 中国连接, type: select, proxies: [➡️ 直连模式, ♻️ 代理模式]}
   - {name: Ⓜ️ 远程仓库, <<: *pr }  
@@ -173,7 +173,10 @@ rules:
 #  - RULE-SET,Game,🎮 游戏平台   
   - GEOSITE,github,Ⓜ️ 远程仓库    
   - GEOSITE,onedrive,Ⓜ️ 微软云盘
-  - GEOSITE,microsoft,Ⓜ️ 微软服务   
+  - GEOSITE,microsoft,Ⓜ️ 微软服务  
+  - GEOSITE,ehentai,♻️ 代理模式 
+  - GEOSITE,telegram,♻️ 代理模式
+  
   - GEOSITE,openai,🤖 人工智能
   - GEOSITE,anthropic,🤖 人工智能   
   - GEOSITE,google,🔍 谷歌服务
@@ -181,9 +184,14 @@ rules:
 #  - GEOSITE,youtube,🎬 油管视频
   - GEOSITE,netflix,🎞️ 奈飞影视
   - GEOSITE,apple,🍎 苹果服务  
+  
+  - RULE-SET,AntiAd_domain,🟥 中国连接 #白名单
+  - RULE-SET,anti-AD_domain,REJECT #广告
   - GEOSITE,category-ads-all,REJECT  #广告  
+
   - GEOSITE,geolocation-!cn,🪜 其它连接
 
+  - GEOIP,telegram,♻️ 代理模式
   - GEOIP,google,🔍 谷歌服务
   - GEOIP,netflix,🎞️ 奈飞影视
   - GEOIP,CN,🟥 中国连接
@@ -196,6 +204,7 @@ rule-anchor:
   domain: &domain {type: http, interval: 86400, behavior: domain, format: yaml}
 
 rule-providers:
+# 自定义常用域名规则
   CustomProxy_domain:
     <<: *domain
     url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/83288892/clash/main/rule/proxy.yaml"
@@ -203,47 +212,25 @@ rule-providers:
   CustomDirect_domain:
     <<: *domain
     url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/83288892/clash/main/rule/direct.yaml"
+# 广告拦截
+  # anti-AD 广告拦截规则
+  # https://github.com/privacy-protection-tools/anti-AD
+  # 如果误杀率高请自行更换
+  # RULE-SET,anti-AD_domain,REJECT  #拦截
+  # RULE-SET,AntiAd_domain,DIRECT #直连
+  anti-AD_domain:
+    <<: *domain
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml"
     
-
+# 白名单
+  AntiAd_domain:
+    <<: *domain
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml"  
+    
 #  cn_ip:
 #    <<: *ip
 #    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.yaml"
 
-  # anti-AD 广告拦截规则
-  # https://github.com/privacy-protection-tools/anti-AD
-  # 如果误杀率高请自行更换
-#  anti-AD:
-#    type: http
-#    behavior: domain
-#    format: yaml
-    # path可为空(仅限clash.meta 1.15.0以上版本)
-#    path: ./rule_provider/anti-AD.yaml
-#    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml?"
-#    interval: 600
-  # anti-AD 白名单规则
-#  anti-AD-white:
-#    type: http
-#    behavior: domain
-#    format: yaml
-    # path可为空(仅限clash.meta 1.15.0以上版本)
-#    path: ./rule_provider/anti-AD-white.yaml
-#    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml?"
-#    interval: 600
-  # 常用游戏平台  
-#  Game:
-#    type: http
-#    behavior: classical
-#    format: yaml
-#    # path可为空(仅限clash.meta 1.15.0以上版本)
-#    path: ./rule_provider/Game.yaml
-#    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.yaml?"
-#    interval: 600
-  # 广告规则  
-#  Advertising_Classical:
-#    type: http
-#    behavior: classical
-#    format: yaml
-    # path可为空(仅限clash.meta 1.15.0以上版本)
-#    path: ./rule_provider/Advertising_Classical.yaml
-#    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml?"
-#    interval: 600  
+
+
+
