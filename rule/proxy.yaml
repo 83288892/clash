@@ -1,4 +1,5 @@
 # NAME: Proxy
+# RULE-SET,CustomProxy_domain,♻️ 代理模式
 payload:
 - "+.assrt.net"
 - "+.sex.com"
