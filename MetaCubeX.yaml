@@ -10,7 +10,7 @@ pr: &pr {type: select, proxies: [♻️ 代理模式,➡️ 直连模式]}
 
 dr: &dr {type: select, proxies: [➡️ 直连模式,♻️ 代理模式]}
 #这里是订阅更新和延迟测试相关的
-p: &p {type: http, interval: 3600, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 600, lazy: true, timeout: 3000, tolerance: 1000}}
+p: &p {type: http, interval: 3600, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 600, lazy: true, timeout: 3000, tolerance: 100}}
 
 # , lazy: true, timeout: 3000, tolerance: 1000
 
