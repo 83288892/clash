@@ -28,12 +28,12 @@ proxy-providers:
                                                   
 
 
-# mode: rule # 默认规则 [rule 默认规则匹配 global 全局代理 (需要在 GLOBAL 策略组选择代理/策略) direct 全局直连]
+mode: rule # 默认规则 [rule 默认规则匹配 global 全局代理 (需要在 GLOBAL 策略组选择代理/策略) direct 全局直连]
 ipv6: true
 allow-lan: true
 mixed-port: 7890
-unified-delay: false
-tcp-concurrent: true
+unified-delay: true    #更换延迟计算方式，去除握手等额外延迟
+tcp-concurrent: true    #TCP 并发
 external-controller: 127.0.0.1:9090
 external-ui: ui
 external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
@@ -44,13 +44,15 @@ geox-url:
   geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
   mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
 
-find-process-mode: strict
-global-client-fingerprint: chrome
+find-process-mode: strict    # 进程匹配模式  always 开启，强制匹配所有进程 strict 默认，由 Clash 判断是否开启 off 不匹配进程，推荐在路由器上使用此模式
+global-client-fingerprint: chrome    # 全局客户端指纹
 
+# 缓存
 profile:
-  store-selected: true
-  store-fake-ip: true
+  store-selected: true   # 储存 API 对策略组的选择，以供下次启动时使用
+  store-fake-ip: true      # 储存 fakeip 映射表，域名再次发生连接时，使用原有映射地址
 
+# 域名嗅探
 sniffer:
   enable: true
   sniff:
@@ -117,7 +119,7 @@ proxy-groups:
   - {name: ♻️ 代理模式, type: select , proxies: [🚀 手动选择, ⛓️ 链式代理,✅ 故障转移, 🔀 自动选择, ➡️ 直连模式, 🔂 一致均衡, 🔁 循环均衡, 💯 精品节点, 🆓 公益节点, 🌏 亚洲地区]}
   - {name: 🚀 手动选择, type: select , include-all-providers: true} 
   - {name: ⛓️ 链式代理, type: relay , proxies: [🌏 亚洲地区, 💯 精品节点]}   #入口自动选择： 🌏 亚洲地区  落地选择： 💯 精品节点  
-  - {name: 💯 精品节点, type: select , include-all-providers: true, filter: "(?i)优|精|反|品|ip|歇"}
+  - {name: 💯 精品节点, type: select , include-all-providers: true, filter: "(?i)优|精|反|品|ip|歇|免流"}
 
 
 
@@ -234,7 +236,3 @@ rule-providers:
 #  cn_ip:
 #    <<: *ip
 #    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.yaml"
-
-
-
-
