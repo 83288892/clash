@@ -34,6 +34,7 @@ allow-lan: true
 mixed-port: 7890
 unified-delay: true    #更换延迟计算方式，去除握手等额外延迟
 tcp-concurrent: true    #TCP 并发
+#keep-alive-interval: 30   # 控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施。
 external-controller: 127.0.0.1:9090
 external-ui: ui
 external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
