@@ -4,5 +4,5 @@ payload:
 - "+.servarica.net"
 - "+.spaceship.com"
 - "+.zhihu.com"
-- "+.xn--ngstr-lra8j.com" #play商店
-- "+.googleapis.cn" # play商店
+- "+.xn--ngstr-lra8j.com" #解决play商店无法下载
+- "+.googleapis.cn" # 解决play商店无法下载
