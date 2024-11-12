@@ -6,7 +6,7 @@ payload:
 - "+.spaceship.com"
 - "+.zhihu.com"
 - "+.sharepoint.com"
-- "+.xn--ngstr-lra8j.com" #解决play商店无法下载
-- "+.googleapis.cn" # 解决play商店无法下载
+#- "+.xn--ngstr-lra8j.com" #解决play商店无法下载
+#- "+.googleapis.cn" # 解决play商店无法下载
 #- "+.playfabapi.com" # 地平线
 #- "+.forzamotorsport.net" #主服务器,涂装,拍卖
