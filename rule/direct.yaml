@@ -10,3 +10,5 @@ payload:
 #- "+.googleapis.cn" # 解决play商店无法下载
 #- "+.playfabapi.com" # 地平线
 #- "+.forzamotorsport.net" #主服务器,涂装,拍卖
+- "+.steamserver.net"
+- "+.steamcontent.com"
