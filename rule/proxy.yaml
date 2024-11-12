@@ -16,3 +16,6 @@ payload:
 - "+.steamcontent.com"
 - "+.steamstatic.com"
 - "+.akamaihd.net"
+- "+.steam.tv"
+- "+.steam-api.com"
+- "+.steam-chat.com"
