@@ -1,6 +1,6 @@
 # NAME: Direct
 # RULE-SET,CustomDirect_domain,➡️ 直连模式  
-payload:
+#payload:
 - "+.servarica.com"
 - "+.servarica.net"
 - "+.spaceship.com"
