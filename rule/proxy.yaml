@@ -1,6 +1,6 @@
 # NAME: Proxy
 # RULE-SET,CustomProxy_domain,♻️ 代理模式
-payload:
+#payload:
 - "+.csdiy.wiki"
 - "+.assrt.net"
 - "+.sex.com"
