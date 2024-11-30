@@ -2,30 +2,34 @@
 ### https://raw.githubusercontent.com/83288892/clash/main/MetaCubeX.yaml
 ######### 锚点 start #######
 # 策略组相关
-#pr: &pr {type: select, proxies: [♻️ 代理模式,🚀 手动选择,✅ 故障转移,🔀 自动选择,➡️ 直连模式,🔂 一致均衡,🔁 循环均衡,💯 精品节点]}
+#pr: &pr {type: select, proxies: [♻️ 代理模式,🚀 手动选择,✅ 故障转移,🔀 自动选择,➡️ 直连模式,🔂 一致散列,🔁 循环均衡,💯 精品节点]}
 
-#pr: &pr {type: select, proxies: [♻️ 代理模式,🚀 手动选择,⛓️ 链式代理,✅ 故障转移,🔀 自动选择,➡️ 直连模式,🔂 一致均衡,🔁 循环均衡,💯 精品节点,🆓 公益节点,🟥 香港节点,🟥 台湾节点,🦁 狮城节点,🗾 日本节点,🥒 韩国节点,🗽 美国节点]}
-
+#pr: &pr {type: select, proxies: [♻️ 代理模式,🚀 手动选择,🌀 链式代理,✅ 故障转移,🔀 自动选择,➡️ 直连模式,🔂 一致散列,🔁 循环均衡,💯 精品节点,🆓 公益节点,🟥 香港节点,🟥 台湾节点,🦁 狮城节点,🗾 日本节点,🥒 韩国节点,🗽 美国节点]}
+# 🌏 亚洲地区,🗽 美国地区
 #prox
-pr: &pr {type: select, proxies: [♻️ 代理模式,➡️ 直连模式,🚀 手动选择,⛓️ 链式代理,🔀 自动选择,❌ 阻断连接,🌏 亚洲地区,🗽 美国地区]}
+pr: &pr {type: select, proxies: [♻️ 代理模式,➡️ 直连模式,🚀 手动选择,🔀 自动选择,🌀 链式代理,❌ 阻断连接]}
 #direct
-dr: &dr {type: select, proxies: [➡️ 直连模式,♻️ 代理模式,🚀 手动选择,⛓️ 链式代理,🔀 自动选择,❌ 阻断连接,🌏 亚洲地区,🗽 美国地区]}
+dr: &dr {type: select, proxies: [➡️ 直连模式,♻️ 代理模式,🚀 手动选择,🔀 自动选择,🌀 链式代理,❌ 阻断连接]}
+#load-balance
+lr: &lr {type: select, proxies: [🔁 循环均衡,🔂 一致散列]}
+# area
+ar: &ar {type: select, proxies: [💯 精品节点,🟥 港澳节点,🟥 台湾节点,🦁 新家节点,🗾 日本节点,🥒 韩国节点,🌏 亚洲地区,🗽 美国地区,❓ 全部地区]}
 #这里是订阅更新和延迟测试相关的
-#p: &p {type: http, interval: 3600, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 600, lazy: true, timeout: 5000, tolerance: 300}}  unified-delay: false
+#p: &p {type: http, interval: 3600, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 600, lazy: true, timeout: 5000, tolerance: 300,  unified-delay: false}} 
 # , lazy: true, timeout: 3000, tolerance: 1000
 # apple测速  http://www.apple.com/library/test/success.html
 # 高通测速  http://www.qualcomm.cn/generate_204
-p: &p {type: http, interval: 86400, health-check: {enable: false, url: https://www.gstatic.com/generate_204, interval: 3600, lazy: true, timeout: 2000, tolerance: 300}}
-d: &d {type: http, interval: 86400, health-check: {enable: false, url: https://www.gstatic.com/generate_204, interval: 3600, lazy: true, timeout: 2000, tolerance: 300}}
-
-
+p: &p {type: http, interval: 3600, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 3600, lazy: true, timeout: 2000, tolerance: 300, unified-delay: false}}
+d: &d {type: http, interval: 86400, health-check: {enable: false, url: https://www.gstatic.com/generate_204, interval: 86400, lazy: true, timeout: 2000, tolerance: 50 ,unified-delay: false}}
+l: &l {type: http, interval: 3600, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 3600, lazy: true, timeout: 2000, tolerance: 100, unified-delay: false}}
+a: &a {type: http, interval: 3600, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 3600, lazy: true, timeout: 2000, tolerance: 100, unified-delay: false}}
 ######### 锚点 end #######
 
 # url 里填写自己的订阅,名称不能重复
 proxy-providers:
   Clash-XXX:
     <<: *p
-    url: "https://xxx.com"
+    url: "https://xxx"
 
 #  Clash-Test:
 #    <<: *p
@@ -63,11 +67,11 @@ global-client-fingerprint: chrome    # 全局客户端指纹
 # 缓存
 profile:
   store-selected: true   # 储存 API 对策略组的选择，以供下次启动时使用
-  store-fake-ip: true      # 储存 fakeip 映射表，域名再次发生连接时，使用原有映射地址
+  store-fake-ip: false      # 储存 fakeip 映射表，域名再次发生连接时，使用原有映射地址
 
 # 域名嗅探
 sniffer:
-  enable: true
+  enable: false
   sniff:
     HTTP:
       ports: [80, 8080-8880]
@@ -80,7 +84,7 @@ sniffer:
     - "Mijia Cloud"
 
 tun:
-  enable: true
+  enable: false
   stack: mixed
   dns-hijack:
     - "any:53"
@@ -89,46 +93,66 @@ tun:
 
 dns:
   enable: true
-  prefer-h3: false
+  prefer-h3: true
   use-hosts: true
   use-system-hosts: true
-  respect-rules: false
+  respect-rules: true
   listen: 0.0.0.0:1053
-  ipv6: false
-  default-nameserver:
+  ipv6: true
+  nameserver:  #全局
+    - https://120.53.53.53/dns-query
+    - https://223.5.5.5/dns-query
+  default-nameserver: #默认
     - 223.5.5.5
+    - 4.2.2.1
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
   fake-ip-filter:
     - '*.lan'
-  nameserver-policy:
+    - '*.local'
+    - '*.internal'
+    - 'localhost'  # 根据需求添加更多域名
+  nameserver-policy: #策略
     '+.arpa': '10.0.0.1'
-    'cn':
+    '+.cn':
       - https://doh.pub/dns-query
       - https://dns.alidns.com/dns-query
-  nameserver:
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
-  fallback:
-    - tls://8.8.4.4
+
+  fallback: #故障转移 备用
+    - tls://8.8.8.8
     - tls://1.1.1.1
-  proxy-server-nameserver:
-    - https://doh.pub/dns-query
-  direct-nameserver:
+  proxy-server-nameserver: #代理
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
+  direct-nameserver: #直连
     - system
   direct-nameserver-follow-policy: false
-  fallback-filter:
+  fallback-filter: #策略规则
     geoip: true
     geoip-code: CN
     geosite:
       - gfw
+      - "!openai"  #落地解锁
+      - "!netflix" #dns解锁
+      - "!google" #WARP送中
     ipcidr:
       - 240.0.0.0/4
     domain:
+      - '+.googleapi.cn'
+      - '+.gstatic.com'            
       - '+.google.com'
       - '+.facebook.com'
       - '+.youtube.com'
+      - '+.twitter.com'
+      - '+.instagram.com'
+      
+#  cache:              #DNS缓存
+#    enable: true
+#    size: 128
+#    min-ttl: 300     # 最小缓存时间，单位秒
+#    max-ttl: 86400   # 最大缓存时间，单位秒
+
 proxies:
 - name: "➡️ 直连模式"
   type: direct
@@ -150,14 +174,12 @@ proxy-groups:
 
 #策略 # 
 
-  - {name: ♻️ 代理模式, type: select , proxies: [🚀 手动选择, ⛓️ 链式代理, 🔀 自动选择, ➡️ 直连模式,  🌏 亚洲地区, 🗽 美国地区]}
+  - {name: ♻️ 代理模式, type: select , proxies: [🚀 手动选择, 🔀 自动选择, ➡️ 直连模式, 🔄 负载均衡, 🌀 链式代理,❌ 阻断连接]}
   - {name: 🚀 手动选择, type: select , include-all-providers: true} 
-  - {name: 🔀 自动选择, type: url-test, include-all-providers: true}  
-  - {name: ⛓️ 链式代理, type: relay , proxies: [🌏 亚洲地区,🗽 美国地区]}   #入口自动选择： 🌏 亚洲地区  落地选择： 💯 精品节点  
-#  - {name: 💯 精品节点, type: select , include-all-providers: true, filter: "(?i)优|精|反|品|ip|歇|免流"}
-  - {name: 🌏 亚洲地区, type: select , include-all-providers: true, filter: "(?i)港|hk|hongkong|hong kong|台|tw|taiwan|(新|sg|singapore)|日|jp|japan|韩|kr|korea|south korea|republic of korea|印|in|越|vn|泰|th"}
-  - {name: 🗽 美国地区, type: select , include-all-providers: true, filter: "(?i)美|us|unitedstates|united states|纽约|洛杉矶|利伯蒂湖|圣何塞|西雅图"}
-
+  - {name: 🔀 自动选择, <<: *ar } 
+#  - {name: 🌀 链式代理, type: relay , proxies: [🔄 负载均衡,🚀 手动选择 ] }     #入口自动选择： 🔄 负载均衡  🚀 手动选择  弃用 relay 启用dialer-proxy
+  - {name: 🌀 链式代理, type: select, proxies: [🚀 手动选择], dialer-proxy: 🔄 负载均衡}
+  - {name: 🔄 负载均衡, <<: *lr }
   
 #分流策略
 
@@ -172,29 +194,34 @@ proxy-groups:
   - {name: 🔍 谷歌服务, <<: *pr }  
   - {name: 🔍 谷歌商店, <<: *pr }
   - {name: 🎬 油管视频, <<: *pr }  
-  - {name: 🎞️ 奈飞影视, <<: *pr }    
+  - {name: 🎞️ 奈飞影视, <<: *pr }   
+  - {name: 🎵 抖音国际, <<: *pr }   
+  - {name: 🐼 绅士漫画, <<: *pr }   
   - {name: 🍎 苹果服务, <<: *dr }      
-  - {name: 🪜 其它连接, <<: *pr}
+  - {name: 🪜 其它连接, <<: *pr }
+
 #  - {name: ➡️ 直连模式, type: select, proxies: [DIRECT]}
 #  - {name: ❌ 断开连接, type: select, proxies: [REJECT]}
 
 #  自动切换节点模式
 
 #  - {name: ✅ 故障转移, type: fallback, include-all-providers: true} 
-#  - {name: ✅ 故障转移, type: fallback, include-all-providers: true}     
 
-#  - {name: 🔂 一致均衡, type: load-balance, include-all-providers: true, strategy: consistent-hashing}    
-#  - {name: 🔁 循环均衡, type: load-balance, include-all-providers: true, strategy: round-robin}
-#地区  
+  - {name: 🔂 一致散列, type: load-balance, include-all-providers: true, strategy: consistent-hashing, filter: "^(?!.*自).*"}    
+  - {name: 🔁 循环均衡, type: load-balance, include-all-providers: true, strategy: round-robin, filter: "^(?!.*自).*"}
+#地区  （自动选择）
  # - {name: 🆓 公益节点, type: url-test , include-all-providers: true, filter: "(?i)公益|free"}
-
-#  - {name: 🟥 香港节点, type: url-test , include-all-providers: true, filter: "(?i)港|hk|hongkong|hong kong"}
-#  - {name: 🟥 台湾节点, type: url-test , include-all-providers: true, filter: "(?i)台|tw|taiwan"}
-#  - {name: 🦁 狮城节点, type: url-test , include-all-providers: true, filter: "(?i)(新|sg|singapore)"}
-#  - {name: 🗾 日本节点, type: url-test , include-all-providers: true, filter: "(?i)日|jp|japan"}
-#  - {name: 🥒 韩国节点, type: url-test , include-all-providers: true, filter: "(?i)韩|kr|korea|south korea|republic of korea"}
+  - {name: 💯 精品节点, type: url-test , include-all-providers: true, filter: "(?i)优|精|反|品|自|家|免流|iplc|iepl|pro"}
+  - {name: 🟥 港澳节点, type: url-test , include-all-providers: true, filter: "(?i)港|hk|hongkong|hong kong|澳门|macao|mo"}
+  - {name: 🟥 台湾节点, type: url-test , include-all-providers: true, filter: "(?i)台|tw|taiwan"}
+  - {name: 🦁 新家节点, type: url-test , include-all-providers: true, filter: "(?i)(新|sg|singapore)"}
+  - {name: 🗾 日本节点, type: url-test , include-all-providers: true, filter: "(?i)日|jp|japan"}
+  - {name: 🥒 韩国节点, type: url-test , include-all-providers: true, filter: "(?i)韩|kr|ko|korea|south korea|republic of korea"}
 #  - {name: 🗽 美国节点, type: url-test , include-all-providers: true, filter: "(?i)美|us|unitedstates|united states"}
-
+  - {name: 🌏 亚洲地区, type: url-test , include-all-providers: true, filter: "(?i)港|hk|hongkong|hong kong|台|tw|taiwan|(新|sg|singapore)|日|jp|japan|韩|kr|korea|south korea|republic of korea|印|in|越|vn|泰|th"}
+  - {name: 🗽 美国地区, type: url-test , include-all-providers: true, filter: "(?i)美|us|unitedstates|united states|纽约|洛杉矶|利伯蒂湖|圣何塞|西雅图"}
+  - {name: ❓ 全部地区, type: url-test , include-all-providers: true}
+#  - {name: ❓ 其它地区, type: url-test , include-all-providers: true, filter: "(?i)荷|nl|nederland|德|de|卢森堡|luxembourg|lu|澳大利亚|au|巴基斯坦|pk|哈萨克斯坦|kaz|加拿大|ca|奥地利|at|比利时|be|捷克|cz|英|gb|法|fr|意|it|罗马尼亚|ro"}
 
 # 分流规则
 rules:
@@ -207,19 +234,23 @@ rules:
 #  - DOMAIN,alidocs.dingtalk.com,♻️ 代理模式 #叮叮免流
 
   - GEOIP,lan,➡️ 直连模式,no-resolve
-  - RULE-SET,CustomProxy_domain,♻️ 代理模式 #自定义
-  - RULE-SET,CustomDirect_domain,➡️ 直连模式   #自定义
+  - RULE-SET,CustomProxy_Domain,♻️ 代理模式 #自定义
+  - RULE-SET,CustomDirect_Domain,➡️ 直连模式   #自定义
+  - RULE-SET,Oracle_Classical,➡️ 直连模式
+  - RULE-SET,Gemini_Classical,🤖 人工智能
   - RULE-SET,GooglePlay_Domain,🔍 谷歌商店 #谷歌 大垃圾
-  - RULE-SET,Riot_Classical,🎮 游戏平台 #拳头 小垃圾
-  - RULE-SET,GameDownloadCN_Classical,🟥 中国连接  
-  - GEOIP,google,🔍 谷歌服务
+  - RULE-SET,Game_Classical,🎮 游戏平台     
+  - RULE-SET,Ehentai_Domain,🐼 绅士漫画
+#  - RULE-SET,Riot_Classical,🎮 游戏平台 #拳头 小垃圾
+  - RULE-SET,GameDownloadCN_Classical,🟥 中国连接,no-resolve  
+
   - GEOSITE,google,🔍 谷歌服务
   - GEOSITE,google-cn,🔍 谷歌服务
   - GEOSITE,youtube,🎬 油管视频
-  - GEOSITE,CN,🟥 中国连接
+  - GEOSITE,tiktok,🎵 抖音国际  
+  - GEOSITE,CN,🟥 中国连接,no-resolve
   - GEOSITE,steam@cn,🎮 游戏平台
   - GEOSITE,steam,🎮 游戏平台
-#  - RULE-SET,Game,🎮 游戏平台   
   - GEOSITE,github,Ⓜ️ 远程仓库    
   - GEOSITE,onedrive,Ⓜ️ 微软云盘
   - GEOSITE,microsoft,Ⓜ️ 微软服务  
@@ -235,7 +266,7 @@ rules:
   - GEOSITE,category-ads-all,REJECT  #广告  
 
   - GEOSITE,geolocation-!cn,🪜 其它连接
-
+  - GEOIP,google,🔍 谷歌服务
   - GEOIP,telegram,♻️ 代理模式 
 
   - GEOIP,netflix,🎞️ 奈飞影视
@@ -250,26 +281,43 @@ rule-anchor:
   classical: &classical {type: http, interval: 86400, behavior: classical, format: yaml}
 rule-providers:
 # 自定义常用域名规则
-  CustomProxy_domain:
+  CustomProxy_Domain:
     <<: *domain
     url: "https://ghp.ci/https://raw.githubusercontent.com/83288892/clash/main/rule/proxy.list"
 
-  CustomDirect_domain:
+  CustomDirect_Domain:
     <<: *domain
     url: "https://ghp.ci/https://raw.githubusercontent.com/83288892/clash/main/rule/direct.list"
 
   GooglePlay_Domain:
     <<: *domain
     url: "https://ghp.ci/https://raw.githubusercontent.com/83288892/clash/main/rule/googleplay.list"  
-# 拳头
-  Riot_Classical:
+  
+  Gemini_Classical:
     <<: *classical
-    url: "https://ghp.ci/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Riot/Riot.yaml"
+    url: "https://ghp.ci/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.yaml"  
+# 拳头
+#  Riot_Classical:
+#    <<: *classical
+#    url: "https://ghp.ci/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Riot/Riot.yaml"
 # 游戏直连下载
   GameDownloadCN_Classical:
     <<: *classical
     url: "https://ghp.ci/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN.yaml"
-    
+
+# 游戏 
+  Game_Classical:
+    <<: *classical
+    url: "https://ghp.ci/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.yaml"
+
+  Ehentai_Domain:
+    <<: *domain
+    url: "https://ghp.ci/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/ehentai.list"    
+# 甲骨文    
+  Oracle_Classical:
+    <<: *classical
+    url: "https://ghp.ci/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Oracle/Oracle.yaml"
+   
 # 广告拦截
   # anti-AD 广告拦截规则
   # https://github.com/privacy-protection-tools/anti-AD
