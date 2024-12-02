@@ -17,12 +17,15 @@ ar: &ar {type: select, proxies: [💯 精品节点,🟥 港澳节点,🟥 台湾
 #这里是订阅更新和延迟测试相关的
 #p: &p {type: http, interval: 3600, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 600, lazy: true, timeout: 5000, tolerance: 300,  unified-delay: false}} 
 # , lazy: true, timeout: 3000, tolerance: 1000
-# apple测速  http://www.apple.com/library/test/success.html
+# Apple测速  http://www.apple.com/library/test/success.html
 # 高通测速  http://www.qualcomm.cn/generate_204
+# Cloudflare https://cp.cloudflare.com
 p: &p {type: http, interval: 3600, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 3600, lazy: true, timeout: 2000, tolerance: 300, unified-delay: false}}
 d: &d {type: http, interval: 86400, health-check: {enable: false, url: https://www.gstatic.com/generate_204, interval: 86400, lazy: true, timeout: 2000, tolerance: 50 ,unified-delay: false}}
 l: &l {type: http, interval: 3600, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 3600, lazy: true, timeout: 2000, tolerance: 100, unified-delay: false}}
 a: &a {type: http, interval: 3600, health-check: {enable: true, url: https://www.gstatic.com/generate_204, interval: 3600, lazy: true, timeout: 2000, tolerance: 100, unified-delay: false}}
+# 本地节点组
+#f: &f {type: file, interval: 300, health-check: {enable: false, url: https://www.gstatic.com/generate_204, interval: 86400, lazy: true, timeout: 2000, tolerance: 50 ,unified-delay: false}}
 ######### 锚点 end #######
 
 # url 里填写自己的订阅,名称不能重复
@@ -36,7 +39,11 @@ proxy-providers:
 #    url: "https://*.*"
 
 
-                                                  
+# 本地节点组
+#  Clash-file:
+#    <<: *f
+#    path: ./proxies/file.txt
+                   
 
 
 mode: rule # 默认规则 [rule 默认规则匹配 global 全局代理 (需要在 GLOBAL 策略组选择代理/策略) direct 全局直连]
